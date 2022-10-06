@@ -3,6 +3,11 @@ server:
 spring:
   profiles:
     active: dev
+  # 数据库配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/novel?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: aaaa1234
 
 # 跨域配置
 novel:
