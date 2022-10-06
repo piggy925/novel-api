@@ -3,3 +3,10 @@ server:
 spring:
   profiles:
     active: dev
+
+# 跨域配置
+novel:
+  cors:
+    allow-origins:
+      - http://localhost:8080
+      - http://localhost:1024
