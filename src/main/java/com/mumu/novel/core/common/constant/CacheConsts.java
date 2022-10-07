@@ -9,6 +9,11 @@ package com.mumu.novel.core.common.constant;
 public class CacheConsts {
 
     /**
+     * 本项目 Redis 缓存前缀
+     */
+    public static final String REDIS_CACHE_PREFIX = "Cache::Novel::";
+
+    /**
      * 首页小说推荐缓存
      */
     public static final String HOME_BOOK_CACHE_NAME = "homeBookCache";
