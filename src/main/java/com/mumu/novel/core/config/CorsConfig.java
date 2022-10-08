@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
  * 跨域配置
  *
  * @author mumu
- * @date 2022/10/06
+ * @date 2022/10/09
  */
 @Configuration
 @EnableConfigurationProperties(CorsProperties.class)
@@ -25,20 +25,20 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        for (String allowedOrigin : corsProperties.getAllowOrigins()) {
-            config.addAllowedOrigin(allowedOrigin);
+        // 允许的域,不要写*，否则cookie就无法使用了
+        for (String allowOrigin : corsProperties.allowOrigins()) {
+            config.addAllowedOrigin(allowOrigin);
         }
-        // 允许的请求头信息
+        // 允许的头信息
         config.addAllowedHeader("*");
         // 允许的请求方式
         config.addAllowedMethod("*");
-        // 是否允许携带 Cookie 信息
+        // 是否允许携带Cookie信息
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource configurationSource = new UrlBasedCorsConfigurationSource();
-        // 添加映射路径，拦截所有请求
+        // 添加映射路径，拦截一切请求
         configurationSource.registerCorsConfiguration("/**", config);
-
         return new CorsFilter(configurationSource);
     }
 

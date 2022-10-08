@@ -7,7 +7,7 @@ import lombok.Data;
  * 响应dto - 首页推荐
  *
  * @author mumu
- * @date 2022/10/08
+ * @date 2022/10/09
  */
 @Data
 public class HomeBookRespDto {

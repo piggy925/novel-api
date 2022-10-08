@@ -1,43 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mumu.novel.dao.mapper.BookInfoMapper">
-    <select id="searchBooks" resultType="io.github.xxyopen.novel.dao.entity.BookInfo">
-        select
-        id,category_id,category_name,book_name,author_id,author_name,word_count,last_chapter_name
-        from book_info where word_count > 0
-        <if test="condition.keyword != null and condition.keyword != ''">
-            and (book_name like concat('%',#{condition.keyword},'%') or author_name like
-            concat('%',#{condition.keyword},'%'))
-        </if>
-        <if test="condition.workDirection != null">
-            and work_direction = #{condition.workDirection}
-        </if>
-        <if test="condition.categoryId != null">
-            and category_id = #{condition.categoryId}
-        </if>
-        <if test="condition.isVip != null">
-            and is_vip = #{condition.isVip}
-        </if>
-        <if test="condition.bookStatus != null">
-            and book_status = #{condition.bookStatus}
-        </if>
-        <if test="condition.wordCountMin != null">
-            and word_count >= #{condition.wordCountMin}
-        </if>
-        <if test="condition.wordCountMax != null">
-            and word_count <![CDATA[ < ]]> #{condition.wordCountMax}
-        </if>
-        <if test="condition.updateTimeMin != null">
-            and last_chapter_update_time >= #{condition.updateTimeMin}
-        </if>
-        <if test="condition.sort != null">
-            order by ${condition.sort}
-        </if>
-    </select>
-
-    <update id="addVisitCount">
-        update book_info
-        set visit_count = visit_count + 1
-        where id = #{bookId}
-    </update>
+  <resultMap id="BaseResultMap" type="com.mumu.novel.dao.entity.BookInfo">
+    <!--@mbg.generated-->
+    <!--@Table book_info-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="work_direction" jdbcType="TINYINT" property="workDirection" />
+    <result column="category_id" jdbcType="BIGINT" property="categoryId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+    <result column="author_id" jdbcType="BIGINT" property="authorId" />
+    <result column="author_name" jdbcType="VARCHAR" property="authorName" />
+    <result column="book_desc" jdbcType="VARCHAR" property="bookDesc" />
+    <result column="score" jdbcType="TINYINT" property="score" />
+    <result column="book_status" jdbcType="TINYINT" property="bookStatus" />
+    <result column="visit_count" jdbcType="BIGINT" property="visitCount" />
+    <result column="word_count" jdbcType="INTEGER" property="wordCount" />
+    <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
+    <result column="last_chapter_id" jdbcType="BIGINT" property="lastChapterId" />
+    <result column="last_chapter_name" jdbcType="VARCHAR" property="lastChapterName" />
+    <result column="last_chapter_update_time" jdbcType="TIMESTAMP" property="lastChapterUpdateTime" />
+    <result column="is_vip" jdbcType="TINYINT" property="isVip" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, work_direction, category_id, category_name, pic_url, book_name, author_id, author_name, 
+    book_desc, score, book_status, visit_count, word_count, comment_count, last_chapter_id, 
+    last_chapter_name, last_chapter_update_time, is_vip, create_time, update_time
+  </sql>
 </mapper>

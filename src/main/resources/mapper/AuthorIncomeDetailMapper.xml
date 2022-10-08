@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mumu.novel.dao.mapper.AuthorIncomeDetailMapper">
+  <resultMap id="BaseResultMap" type="com.mumu.novel.dao.entity.AuthorIncomeDetail">
+    <!--@mbg.generated-->
+    <!--@Table author_income_detail-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="author_id" jdbcType="BIGINT" property="authorId" />
+    <result column="book_id" jdbcType="BIGINT" property="bookId" />
+    <result column="income_date" jdbcType="DATE" property="incomeDate" />
+    <result column="income_account" jdbcType="INTEGER" property="incomeAccount" />
+    <result column="income_count" jdbcType="INTEGER" property="incomeCount" />
+    <result column="income_number" jdbcType="INTEGER" property="incomeNumber" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, author_id, book_id, income_date, income_account, income_count, income_number, 
+    create_time, update_time
+  </sql>
 </mapper>

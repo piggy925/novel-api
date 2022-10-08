@@ -12,21 +12,20 @@ import com.mumu.novel.service.HomeService;
 import lombok.RequiredArgsConstructor;
 
 /**
+ * 首页模块 服务实现类
+ *
  * @author mumu
- * @date 2022/10/08
+ * @date 2022/10/09
  */
 @Service
 @RequiredArgsConstructor
 public class HomeServiceImpl implements HomeService {
 
     private final HomeBookCacheManager homeBookCacheManager;
-
-    /**
-     * 查询首页推荐小说
-     */
+    
     @Override
     public RestResp<List<HomeBookRespDto>> listHomeBooks() {
         return RestResp.ok(homeBookCacheManager.listHomeBooks());
     }
-
+    
 }

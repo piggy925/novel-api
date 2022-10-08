@@ -21,11 +21,3 @@ novel:
     allow-origins:
       - http://localhost:8080
       - http://localhost:1024
-
-mybatis-plus:
-  mapper-locations: classpath:mapper/*.xml
-
-# 接口文档配置
-springdoc:
-  api-docs:
-    enabled: true

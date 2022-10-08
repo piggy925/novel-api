@@ -1,19 +1,40 @@
 package com.mumu.novel.core.common.constant;
 
+
 /**
- * 通用常量类
+ * 通用常量
  *
  * @author mumu
- * @date 2022/10/05
+ * @date 2022/10/08
  */
 public class CommonConsts {
 
     /**
-     * 性别枚举常量
+     * 是
+     */
+    public static final Integer YES = 1;
+    public static final String TRUE = "true";
+
+
+    /**
+     * 否
+     */
+    public static final Integer NO = 0;
+    public static final String FALSE = "false";
+
+    /**
+     * 性别常量
      */
     public enum SexEnum {
+
+        /**
+         * 男
+         */
         MALE(0, "男"),
 
+        /**
+         * 女
+         */
         FEMALE(1, "女");
 
         SexEnum(int code, String desc) {
@@ -22,7 +43,6 @@ public class CommonConsts {
         }
 
         private int code;
-
         private String desc;
 
         public int getCode() {
@@ -32,6 +52,6 @@ public class CommonConsts {
         public String getDesc() {
             return desc;
         }
-    }
 
+    }
 }

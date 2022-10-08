@@ -18,13 +18,13 @@ import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
-import com.mumu.novel.core.common.constant.CacheConsts;
+import com.mumu.novel.core.constant.CacheConsts;
 
 /**
- * 缓存相关配置类
+ * 缓存配置类
  *
  * @author mumu
- * @date 2022/10/07
+ * @date 2022/10/08
  */
 @Configuration
 public class CacheConfig {
@@ -38,9 +38,11 @@ public class CacheConfig {
         SimpleCacheManager cacheManager = new SimpleCacheManager();
 
         List<CaffeineCache> caches = new ArrayList<>(CacheConsts.CacheEnum.values().length);
-        for (CacheConsts.CacheEnum c : CacheConsts.CacheEnum.values()) {
+        // 类型推断 var 非常适合 for 循环，JDK 10 引入，JDK 11 改进
+        for (var c : CacheConsts.CacheEnum.values()) {
             if (c.isLocal()) {
-                Caffeine<Object, Object> caffeine = Caffeine.newBuilder().recordStats().maximumSize(c.getMaxSize());
+                Caffeine<Object, Object> caffeine = Caffeine.newBuilder().recordStats()
+                    .maximumSize(c.getMaxSize());
                 if (c.getTtl() > 0) {
                     caffeine.expireAfterWrite(Duration.ofSeconds(c.getTtl()));
                 }
@@ -57,25 +59,32 @@ public class CacheConfig {
      */
     @Bean
     public CacheManager redisCacheManager(RedisConnectionFactory connectionFactory) {
-        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(connectionFactory);
+        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(
+            connectionFactory);
 
         RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
-                .disableCachingNullValues().prefixCacheNameWith(CacheConsts.REDIS_CACHE_PREFIX);
+            .disableCachingNullValues().prefixCacheNameWith(CacheConsts.REDIS_CACHE_PREFIX);
 
-        Map<String, RedisCacheConfiguration> cacheMap = new LinkedHashMap<>(CacheConsts.CacheEnum.values().length);
-        for (CacheConsts.CacheEnum c : CacheConsts.CacheEnum.values()) {
+        Map<String, RedisCacheConfiguration> cacheMap = new LinkedHashMap<>(
+            CacheConsts.CacheEnum.values().length);
+        // 类型推断 var 非常适合 for 循环，JDK 10 引入，JDK 11 改进
+        for (var c : CacheConsts.CacheEnum.values()) {
             if (c.isRemote()) {
                 if (c.getTtl() > 0) {
-                    cacheMap.put(c.getName(), RedisCacheConfiguration.defaultCacheConfig().disableCachingNullValues()
-                            .prefixCacheNameWith(CacheConsts.REDIS_CACHE_PREFIX).entryTtl(Duration.ofSeconds(c.getTtl())));
+                    cacheMap.put(c.getName(),
+                        RedisCacheConfiguration.defaultCacheConfig().disableCachingNullValues()
+                            .prefixCacheNameWith(CacheConsts.REDIS_CACHE_PREFIX)
+                            .entryTtl(Duration.ofSeconds(c.getTtl())));
                 } else {
-                    cacheMap.put(c.getName(), RedisCacheConfiguration.defaultCacheConfig().disableCachingNullValues()
+                    cacheMap.put(c.getName(),
+                        RedisCacheConfiguration.defaultCacheConfig().disableCachingNullValues()
                             .prefixCacheNameWith(CacheConsts.REDIS_CACHE_PREFIX));
                 }
             }
         }
 
-        RedisCacheManager redisCacheManager = new RedisCacheManager(redisCacheWriter, defaultCacheConfig, cacheMap);
+        RedisCacheManager redisCacheManager = new RedisCacheManager(redisCacheWriter,
+            defaultCacheConfig, cacheMap);
         redisCacheManager.setTransactionAware(true);
         redisCacheManager.initializeCaches();
         return redisCacheManager;
