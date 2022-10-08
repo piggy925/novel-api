@@ -9,6 +9,11 @@ package com.mumu.novel.core.common.constant;
 public class CacheConsts {
 
     /**
+     * Caffeine 缓存管理器
+     */
+    public static final String CAFFEINE_CACHE_MANAGER = "caffeineCacheManager";
+
+    /**
      * 本项目 Redis 缓存前缀
      */
     public static final String REDIS_CACHE_PREFIX = "Cache::Novel::";
