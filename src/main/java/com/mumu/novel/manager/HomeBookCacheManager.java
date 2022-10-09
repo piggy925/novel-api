@@ -60,6 +60,7 @@ public class HomeBookCacheManager {
                 return homeBooks.stream().map(v -> {
                     BookInfo bookInfo = bookInfoMap.get(v.getBookId());
                     HomeBookRespDto bookRespDto = new HomeBookRespDto();
+                    bookRespDto.setType(v.getType());
                     bookRespDto.setBookId(v.getBookId());
                     bookRespDto.setBookName(bookInfo.getBookName());
                     bookRespDto.setPicUrl(bookInfo.getPicUrl());
