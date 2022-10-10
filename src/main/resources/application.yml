@@ -15,9 +15,14 @@ spring:
       username: root
       password:
 
-# 跨域配置
+# 项目配置
 novel:
+  # 跨域配置
   cors:
     allow-origins:
       - http://localhost:8080
       - http://localhost:1024
+  # jwt 秘钥配置
+  jwt:
+    secret: E66559580A1ADF48CDD928516062F12E
+  

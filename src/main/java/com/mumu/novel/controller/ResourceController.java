@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mumu.novel.core.common.constant.ApiRouterConsts;
 import com.mumu.novel.core.common.resp.RestResp;
+import com.mumu.novel.core.constant.ApiRouterConsts;
 import com.mumu.novel.dto.resp.ImgVerifyCodeRespDto;
 import com.mumu.novel.service.ResourceService;
 
