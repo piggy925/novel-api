@@ -9,11 +9,10 @@ spring:
     username: root
     password: aaaa1234
   # Redis 配置
-  data:
-    redis:
-      host: 127.0.0.1
-      username: root
-      password:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
 
 # 项目配置
 novel:
