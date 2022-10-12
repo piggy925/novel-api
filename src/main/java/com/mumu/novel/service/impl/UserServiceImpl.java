@@ -2,6 +2,7 @@ package com.mumu.novel.service.impl;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -15,7 +16,9 @@ import com.mumu.novel.core.constant.SystemConfigConsts;
 import com.mumu.novel.core.util.JwtUtils;
 import com.mumu.novel.dao.entity.UserInfo;
 import com.mumu.novel.dao.mapper.UserInfoMapper;
+import com.mumu.novel.dto.req.UserLoginReqDto;
 import com.mumu.novel.dto.req.UserRegisterReqDto;
+import com.mumu.novel.dto.resp.UserLoginRespDto;
 import com.mumu.novel.dto.resp.UserRegisterRespDto;
 import com.mumu.novel.manager.VerifyCodeManager;
 import com.mumu.novel.service.UserService;
@@ -71,9 +74,36 @@ public class UserServiceImpl implements UserService {
         // 生成 JWT 并返回
         Long id = userInfo.getId();
         String token = jwtUtils.genToken(id, SystemConfigConsts.NOVEL_FRONT_KEY);
-        return RestResp.ok(UserRegisterRespDto.builder()
-            .uid(id)
+        return RestResp.ok(UserRegisterRespDto.builder().uid(id).token(token).build());
+    }
+
+    /**
+     * 用户登录
+     */
+    @Override
+    public RestResp<UserLoginRespDto> login(UserLoginReqDto dto) {
+        // 查询用户信息
+        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
+        wrapper.eq(DatabaseConsts.UserInfoTable.COLUMN_USERNAME, dto.getUsername()).last(DatabaseConsts.SqlEnum.LIMIT_1.getSql());
+        UserInfo userInfo = userInfoMapper.selectOne(wrapper);
+        if (Objects.isNull(userInfo)) {
+            throw new BusinessException(ErrorCodeEnum.USER_ACCOUNT_NOT_EXIST);
+        }
+
+        // 判断密码是否正确
+        String encryptPassword = DigestUtils.md5DigestAsHex(dto.getPassword().getBytes(StandardCharsets.UTF_8));
+        if (!Objects.equals(userInfo.getPassword(), encryptPassword)) {
+            throw new BusinessException(ErrorCodeEnum.USER_PASSWORD_ERROR);
+        }
+
+        // 生成 token 并返回
+        Long uid = userInfo.getId();
+        String token = jwtUtils.genToken(uid, SystemConfigConsts.NOVEL_FRONT_KEY);
+        return RestResp.ok(UserLoginRespDto.builder()
+            .uid(uid)
+            .nickName(userInfo.getNickName())
             .token(token)
             .build());
     }
+
 }

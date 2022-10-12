@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mumu.novel.core.common.resp.RestResp;
 import com.mumu.novel.core.constant.ApiRouterConsts;
 import com.mumu.novel.core.constant.SystemConfigConsts;
+import com.mumu.novel.dto.req.UserLoginReqDto;
 import com.mumu.novel.dto.req.UserRegisterReqDto;
+import com.mumu.novel.dto.resp.UserLoginRespDto;
 import com.mumu.novel.dto.resp.UserRegisterRespDto;
 import com.mumu.novel.service.UserService;
 
@@ -41,4 +43,14 @@ public class UserController {
     public RestResp<UserRegisterRespDto> register(@Valid @RequestBody UserRegisterReqDto dto) {
         return userService.register(dto);
     }
+
+    /**
+     * 用户登录接口
+     */
+    @Operation(summary = "用户登录接口")
+    @PostMapping("login")
+    public RestResp<UserLoginRespDto> login(@Valid @RequestBody UserLoginReqDto dto) {
+        return userService.login(dto);
+    }
+
 }
