@@ -29,7 +29,7 @@ public class BookInfo implements Serializable {
     /**
      * 作品方向;0-男频 1-女频
      */
-    private Byte workDirection;
+    private Integer workDirection;
 
     /**
      * 类别ID
@@ -74,7 +74,7 @@ public class BookInfo implements Serializable {
     /**
      * 书籍状态;0-连载中 1-已完结
      */
-    private Byte bookStatus;
+    private Integer bookStatus;
 
     /**
      * 点击量
@@ -109,7 +109,7 @@ public class BookInfo implements Serializable {
     /**
      * 是否收费;1-收费 0-免费
      */
-    private Byte isVip;
+    private Integer isVip;
 
     /**
      * 创建时间
