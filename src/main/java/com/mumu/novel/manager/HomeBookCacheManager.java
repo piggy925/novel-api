@@ -56,7 +56,8 @@ public class HomeBookCacheManager {
 
             // 组装 HomeBookRespDto 列表数据并返回
             if (!CollectionUtils.isEmpty(bookInfos)) {
-                Map<Long, BookInfo> bookInfoMap = bookInfos.stream().collect(Collectors.toMap(BookInfo::getId, Function.identity()));
+                Map<Long, BookInfo> bookInfoMap = bookInfos.stream().collect(Collectors.toMap(BookInfo::getId,
+                    Function.identity()));
                 return homeBooks.stream().map(v -> {
                     BookInfo bookInfo = bookInfoMap.get(v.getBookId());
                     HomeBookRespDto bookRespDto = new HomeBookRespDto();
@@ -68,11 +69,8 @@ public class HomeBookCacheManager {
                     bookRespDto.setBookDesc(bookInfo.getBookDesc());
                     return bookRespDto;
                 }).toList();
-
             }
-
         }
-
         return Collections.emptyList();
     }
 

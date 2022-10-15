@@ -63,4 +63,5 @@ public class BookInfoCacheManager {
             .wordCount(bookInfo.getWordCount())
             .build();
     }
+
 }

@@ -26,7 +26,6 @@ public class CommonConsts {
      * 性别常量
      */
     public enum SexEnum {
-
         /**
          * 男
          */
@@ -52,6 +51,6 @@ public class CommonConsts {
         public String getDesc() {
             return desc;
         }
-
     }
+
 }
