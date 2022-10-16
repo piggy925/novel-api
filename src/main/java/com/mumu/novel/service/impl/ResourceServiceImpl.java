@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.mumu.novel.core.common.resp.RestResp;
 import com.mumu.novel.dto.resp.ImgVerifyCodeRespDto;
-import com.mumu.novel.manager.VerifyCodeManager;
+import com.mumu.novel.manager.cache.VerifyCodeManager;
 import com.mumu.novel.service.ResourceService;
 
 import lombok.RequiredArgsConstructor;

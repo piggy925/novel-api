@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.mumu.novel.core.common.resp.RestResp;
 import com.mumu.novel.dto.resp.HomeBookRespDto;
-import com.mumu.novel.manager.HomeBookCacheManager;
+import com.mumu.novel.manager.cache.HomeBookCacheManager;
 import com.mumu.novel.service.HomeService;
 
 import lombok.RequiredArgsConstructor;

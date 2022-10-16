@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mumu.novel.core.common.resp.RestResp;
 import com.mumu.novel.core.constant.ApiRouterConsts;
+import com.mumu.novel.dto.resp.BookCommentRespDto;
 import com.mumu.novel.dto.resp.BookInfoRespDto;
 import com.mumu.novel.service.BookService;
 
@@ -27,11 +28,21 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BookController {
 
-    private final BookService bookservice;
+    private final BookService bookService;
 
     @Operation(summary = "小说信息查询接口")
     @GetMapping("{id}")
     public RestResp<BookInfoRespDto> getBookById(@Parameter(description = "小说 ID") @PathVariable("id") Long id) {
-        return bookservice.getBookById(id);
+        return bookService.getBookById(id);
     }
+
+    /**
+     * 小说最新评论查询接口
+     */
+    @Operation(summary = "小说最新评论查询接口")
+    @GetMapping("comment/newest_list")
+    public RestResp<BookCommentRespDto> listNewestComments(@Parameter(description = "小说ID") Long bookId) {
+        return bookService.listLatestComments(bookId);
+    }
+
 }

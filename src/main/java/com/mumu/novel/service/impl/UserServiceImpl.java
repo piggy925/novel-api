@@ -20,7 +20,7 @@ import com.mumu.novel.dto.req.UserLoginReqDto;
 import com.mumu.novel.dto.req.UserRegisterReqDto;
 import com.mumu.novel.dto.resp.UserLoginRespDto;
 import com.mumu.novel.dto.resp.UserRegisterRespDto;
-import com.mumu.novel.manager.VerifyCodeManager;
+import com.mumu.novel.manager.cache.VerifyCodeManager;
 import com.mumu.novel.service.UserService;
 
 import lombok.RequiredArgsConstructor;
