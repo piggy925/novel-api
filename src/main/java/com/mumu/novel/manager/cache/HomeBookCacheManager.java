@@ -1,4 +1,4 @@
-package com.mumu.novel.manager;
+package com.mumu.novel.manager.cache;
 
 import java.util.Collections;
 import java.util.List;

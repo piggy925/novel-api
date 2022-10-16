@@ -1,4 +1,4 @@
-package com.mumu.novel.manager;
+package com.mumu.novel.manager.cache;
 
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;

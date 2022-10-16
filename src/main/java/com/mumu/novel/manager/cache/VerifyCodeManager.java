@@ -1,4 +1,4 @@
-package com.mumu.novel.manager;
+package com.mumu.novel.manager.cache;
 
 import java.io.IOException;
 import java.time.Duration;
