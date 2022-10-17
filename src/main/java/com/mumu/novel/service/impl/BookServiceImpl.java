@@ -5,14 +5,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mumu.novel.core.common.resp.RestResp;
+import com.mumu.novel.core.constant.CacheConsts;
 import com.mumu.novel.core.constant.DatabaseConsts;
 import com.mumu.novel.dao.entity.BookComment;
 import com.mumu.novel.dao.entity.UserInfo;
 import com.mumu.novel.dao.mapper.BookCommentMapper;
+import com.mumu.novel.dto.req.UserCommentReqDto;
 import com.mumu.novel.dto.resp.BookCommentRespDto;
 import com.mumu.novel.dto.resp.BookInfoRespDto;
 import com.mumu.novel.manager.cache.BookInfoCacheManager;
@@ -34,6 +37,8 @@ public class BookServiceImpl implements BookService {
     private final BookCommentMapper bookCommentMapper;
 
     private final UserDaoManager userDaoManager;
+
+    private final StringRedisTemplate stringRedisTemplate;
 
     /**
      * 小说信息查询接口
@@ -80,6 +85,20 @@ public class BookServiceImpl implements BookService {
             bookCommentRespDto.setComments(Collections.emptyList());
         }
         return RestResp.ok(bookCommentRespDto);
+    }
+
+    /**
+     * 发表小说评论
+     */
+    @Override
+    public RestResp<Void> addComment(UserCommentReqDto dto) {
+        // 此处可以添加评论相关限制，比如用户只能对同一本书每天评论三条等
+        BookComment bookComment = new BookComment();
+        bookComment.setUserId(Long.valueOf(stringRedisTemplate.opsForValue().get(CacheConsts.LOGIN_USER_ID_NAME)));
+        bookComment.setBookId(dto.getBookId());
+        bookComment.setCommentContent(dto.getCommentContent());
+        bookCommentMapper.insert(bookComment);
+        return RestResp.ok();
     }
 
 }

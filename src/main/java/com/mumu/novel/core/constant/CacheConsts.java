@@ -13,7 +13,6 @@ public class CacheConsts {
      */
     public static final String REDIS_CACHE_PREFIX = "Cache::Novel::";
 
-
     /**
      * Caffeine 缓存管理器
      */
@@ -95,11 +94,12 @@ public class CacheConsts {
      */
     public static final String AUTHOR_INFO_CACHE_NAME = "authorInfoCache";
 
+    public static final String LOGIN_USER_ID_NAME = "loginUserId";
+
     /**
      * 缓存配置常量
      */
     public enum CacheEnum {
-
         HOME_BOOK_CACHE(0, HOME_BOOK_CACHE_NAME, 60 * 60 * 24, 1),
 
         LATEST_NEWS_CACHE(0, LATEST_NEWS_CACHE_NAME, 60 * 10, 1),

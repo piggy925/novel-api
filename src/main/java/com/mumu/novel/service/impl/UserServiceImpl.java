@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Objects;
 
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mumu.novel.core.common.constant.ErrorCodeEnum;
 import com.mumu.novel.core.common.exception.BusinessException;
 import com.mumu.novel.core.common.resp.RestResp;
+import com.mumu.novel.core.constant.CacheConsts;
 import com.mumu.novel.core.constant.DatabaseConsts;
 import com.mumu.novel.core.constant.SystemConfigConsts;
 import com.mumu.novel.core.util.JwtUtils;
@@ -41,6 +43,8 @@ public class UserServiceImpl implements UserService {
 
     private final JwtUtils jwtUtils;
 
+    private final StringRedisTemplate stringRedisTemplate;
+
     /**
      * 用户注册
      */
@@ -52,7 +56,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 校验手机号是否已注册
-        QueryWrapper<UserInfo> wrapper = new QueryWrapper();
+        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
         wrapper.eq(DatabaseConsts.UserInfoTable.COLUMN_USERNAME, dto.getUsername()).last(DatabaseConsts.SqlEnum.LIMIT_1.getSql());
         if (userInfoMapper.selectCount(wrapper) > 0) {
             throw new BusinessException(ErrorCodeEnum.USER_NAME_EXIST);
@@ -98,6 +102,7 @@ public class UserServiceImpl implements UserService {
 
         // 生成 token 并返回
         Long uid = userInfo.getId();
+        stringRedisTemplate.opsForValue().set(CacheConsts.LOGIN_USER_ID_NAME, String.valueOf(uid));
         String token = jwtUtils.genToken(uid, SystemConfigConsts.NOVEL_FRONT_KEY);
         return RestResp.ok(UserLoginRespDto.builder()
             .uid(uid)

@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mumu.novel.core.common.resp.RestResp;
 import com.mumu.novel.core.constant.ApiRouterConsts;
 import com.mumu.novel.core.constant.SystemConfigConsts;
+import com.mumu.novel.dto.req.UserCommentReqDto;
 import com.mumu.novel.dto.req.UserLoginReqDto;
 import com.mumu.novel.dto.req.UserRegisterReqDto;
 import com.mumu.novel.dto.resp.UserLoginRespDto;
 import com.mumu.novel.dto.resp.UserRegisterRespDto;
+import com.mumu.novel.service.BookService;
 import com.mumu.novel.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,6 +37,8 @@ public class UserController {
 
     private final UserService userService;
 
+    private final BookService bookService;
+
     /**
      * 用户注册接口
      */
@@ -51,6 +55,13 @@ public class UserController {
     @PostMapping("login")
     public RestResp<UserLoginRespDto> login(@Valid @RequestBody UserLoginReqDto dto) {
         return userService.login(dto);
+    }
+
+
+    @Operation(summary = "小说评论添加接口")
+    @PostMapping("comment")
+    public RestResp<Void> addComment(@Valid @RequestBody UserCommentReqDto dto) {
+        return bookService.addComment(dto);
     }
 
 }

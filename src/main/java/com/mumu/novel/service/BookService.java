@@ -1,6 +1,7 @@
 package com.mumu.novel.service;
 
 import com.mumu.novel.core.common.resp.RestResp;
+import com.mumu.novel.dto.req.UserCommentReqDto;
 import com.mumu.novel.dto.resp.BookCommentRespDto;
 import com.mumu.novel.dto.resp.BookInfoRespDto;
 
@@ -21,5 +22,10 @@ public interface BookService {
      * 小说评论查询接口
      */
     RestResp<BookCommentRespDto> listLatestComments(Long id);
+
+    /**
+     * 发表小说评论
+     */
+    RestResp<Void> addComment(UserCommentReqDto dto);
 
 }
