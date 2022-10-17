@@ -61,7 +61,7 @@ public class BookServiceImpl implements BookService {
         if (commentCount > 0) {
             // 查询最近的 5 条评论
             QueryWrapper<BookComment> commentQueryWrapper = new QueryWrapper<>();
-            commentCountQueryWrapper.eq(DatabaseConsts.BookCommentTable.COLUMN_BOOK_ID, id)
+            commentQueryWrapper.eq(DatabaseConsts.BookCommentTable.COLUMN_BOOK_ID, id)
                 .orderByDesc(DatabaseConsts.CommonColumnEnum.CREATE_TIME.getName())
                 .last(DatabaseConsts.SqlEnum.LIMIT_5.getSql());
             List<BookComment> bookComments = bookCommentMapper.selectList(commentQueryWrapper);
