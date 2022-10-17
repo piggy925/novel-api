@@ -76,7 +76,7 @@ public class BookServiceImpl implements BookService {
                     .id(v.getId())
                     .commentUserId(v.getUserId())
                     .commentContent(v.getCommentContent())
-                    .commentUser(userInfoMap.get(v.getId()))
+                    .commentUser(userInfoMap.get(v.getUserId()))
                     .commentTime(v.getCreateTime())
                     .build()
                 ).toList();
