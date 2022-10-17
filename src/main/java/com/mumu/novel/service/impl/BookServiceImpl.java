@@ -101,4 +101,32 @@ public class BookServiceImpl implements BookService {
         return RestResp.ok();
     }
 
+    /**
+     * 修改小说评论
+     */
+    @Override
+    public RestResp<Void> updateComment(Long id, String content) {
+        String userId = stringRedisTemplate.opsForValue().get(CacheConsts.LOGIN_USER_ID_NAME);
+        QueryWrapper<BookComment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(DatabaseConsts.BookCommentTable.COLUMN_USER_ID, userId)
+            .eq(DatabaseConsts.CommonColumnEnum.ID.getName(), id);
+        BookComment bookComment = new BookComment();
+        bookComment.setCommentContent(content);
+        bookCommentMapper.update(bookComment, queryWrapper);
+        return RestResp.ok();
+    }
+
+    /**
+     * 添加小说评论
+     */
+    @Override
+    public RestResp<Void> deleteComment(Long id) {
+        String userId = stringRedisTemplate.opsForValue().get(CacheConsts.LOGIN_USER_ID_NAME);
+        QueryWrapper<BookComment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(DatabaseConsts.BookCommentTable.COLUMN_USER_ID, userId)
+            .eq(DatabaseConsts.CommonColumnEnum.ID.getName(), id);
+        bookCommentMapper.delete(queryWrapper);
+        return RestResp.ok();
+    }
+
 }

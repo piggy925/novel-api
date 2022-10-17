@@ -1,10 +1,14 @@
 package com.mumu.novel.controller;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mumu.novel.core.auth.UserHolder;
 import com.mumu.novel.core.common.resp.RestResp;
 import com.mumu.novel.core.constant.ApiRouterConsts;
 import com.mumu.novel.core.constant.SystemConfigConsts;
@@ -56,12 +60,32 @@ public class UserController {
     public RestResp<UserLoginRespDto> login(@Valid @RequestBody UserLoginReqDto dto) {
         return userService.login(dto);
     }
-
-
+    
+    /**
+     * 添加评论接口
+     */
     @Operation(summary = "小说评论添加接口")
     @PostMapping("comment")
     public RestResp<Void> addComment(@Valid @RequestBody UserCommentReqDto dto) {
         return bookService.addComment(dto);
+    }
+
+    /**
+     * 修改评论接口
+     */
+    @Operation(summary = "小说评论修改接口")
+    @PutMapping("comment/{id}")
+    public RestResp<Void> updateComment(@PathVariable Long id, String content) {
+        return bookService.updateComment(id, content);
+    }
+
+    /**
+     * 删除评论接口
+     */
+    @Operation(summary = "小说评论删除接口")
+    @DeleteMapping("comment/{id}")
+    public RestResp<Void> deleteComment(@PathVariable Long id) {
+        return bookService.deleteComment(id);
     }
 
 }

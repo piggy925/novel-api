@@ -28,4 +28,13 @@ public interface BookService {
      */
     RestResp<Void> addComment(UserCommentReqDto dto);
 
+    /**
+     * 修改小说评论
+     */
+    RestResp<Void> updateComment(Long id, String content);
+
+    /**
+     * 添加小说评论
+     */
+    RestResp<Void> deleteComment(Long id);
 }
