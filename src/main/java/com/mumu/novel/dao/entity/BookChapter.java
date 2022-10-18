@@ -32,7 +32,7 @@ public class BookChapter implements Serializable {
     /**
      * 章节号
      */
-    private Short chapterNum;
+    private Integer chapterNum;
 
     /**
      * 章节名

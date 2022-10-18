@@ -12,12 +12,18 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mumu.novel.core.common.resp.RestResp;
 import com.mumu.novel.core.constant.CacheConsts;
 import com.mumu.novel.core.constant.DatabaseConsts;
+import com.mumu.novel.dao.entity.BookChapter;
 import com.mumu.novel.dao.entity.BookComment;
 import com.mumu.novel.dao.entity.UserInfo;
+import com.mumu.novel.dao.mapper.BookChapterMapper;
 import com.mumu.novel.dao.mapper.BookCommentMapper;
 import com.mumu.novel.dto.req.UserCommentReqDto;
+import com.mumu.novel.dto.resp.BookChapterAboutRespDto;
+import com.mumu.novel.dto.resp.BookChapterRespDto;
 import com.mumu.novel.dto.resp.BookCommentRespDto;
 import com.mumu.novel.dto.resp.BookInfoRespDto;
+import com.mumu.novel.manager.cache.BookChapterCacheManager;
+import com.mumu.novel.manager.cache.BookContentCacheManager;
 import com.mumu.novel.manager.cache.BookInfoCacheManager;
 import com.mumu.novel.manager.dao.UserDaoManager;
 import com.mumu.novel.service.BookService;
@@ -37,6 +43,12 @@ public class BookServiceImpl implements BookService {
     private final BookCommentMapper bookCommentMapper;
 
     private final UserDaoManager userDaoManager;
+
+    private final BookChapterMapper bookChapterMapper;
+
+    private final BookChapterCacheManager bookChapterCacheManager;
+
+    private final BookContentCacheManager bookContentCacheManager;
 
     private final StringRedisTemplate stringRedisTemplate;
 
@@ -127,6 +139,33 @@ public class BookServiceImpl implements BookService {
             .eq(DatabaseConsts.CommonColumnEnum.ID.getName(), id);
         bookCommentMapper.delete(queryWrapper);
         return RestResp.ok();
+    }
+
+    /**
+     * 查询小说章节信息
+     */
+    @Override
+    public RestResp<BookChapterAboutRespDto> getLastChapterAbout(Long bookId) {
+        // 查询小说信息
+        BookInfoRespDto bookInfo = bookInfoCacheManager.getBookInfo(bookId);
+
+        // 查询最新章节信息
+        Long lastChapterId = bookInfo.getLastChapterId();
+        BookChapterRespDto lastChapter = bookChapterCacheManager.getChapter(lastChapterId);
+
+        // 查询章节内容
+        String bookContent = bookContentCacheManager.getBookContent(lastChapterId);
+
+        // 查询章节总数
+        QueryWrapper<BookChapter> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(DatabaseConsts.BookChapterTable.COLUMN_BOOK_ID, bookId);
+        Long chapterCount = bookChapterMapper.selectCount(queryWrapper);
+
+        return RestResp.ok(BookChapterAboutRespDto.builder()
+            .chapterInfo(lastChapter)
+            .chapterTotal(chapterCount)
+            .contentSummary(bookContent.substring(0, 100).trim().replaceAll("<br/>", ""))
+            .build());
     }
 
 }

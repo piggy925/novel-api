@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mumu.novel.core.common.resp.RestResp;
 import com.mumu.novel.core.constant.ApiRouterConsts;
+import com.mumu.novel.dto.resp.BookChapterAboutRespDto;
 import com.mumu.novel.dto.resp.BookCommentRespDto;
 import com.mumu.novel.dto.resp.BookInfoRespDto;
 import com.mumu.novel.service.BookService;
@@ -43,6 +44,16 @@ public class BookController {
     @GetMapping("comment/newest_list")
     public RestResp<BookCommentRespDto> listNewestComments(@Parameter(description = "小说ID") Long bookId) {
         return bookService.listLatestComments(bookId);
+    }
+
+    /**
+     * 小说最新章节相关信息查询接口
+     */
+    @Operation(summary = "小说最新章节相关信息查询接口")
+    @GetMapping("last_chapter/about")
+    public RestResp<BookChapterAboutRespDto> getLastChapterAbout(
+        @Parameter(description = "小说ID") Long bookId) {
+        return bookService.getLastChapterAbout(bookId);
     }
 
 }

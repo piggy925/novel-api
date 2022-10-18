@@ -58,6 +58,7 @@ public class BookInfoCacheManager {
             .commentCount(bookInfo.getCommentCount())
             .firstChapterId(firstBookChapter.getId())
             .lastChapterId(bookInfo.getLastChapterId())
+            .lastChapterName(bookInfo.getLastChapterName())
             .picUrl(bookInfo.getPicUrl())
             .visitCount(bookInfo.getVisitCount())
             .wordCount(bookInfo.getWordCount())

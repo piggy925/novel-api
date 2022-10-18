@@ -1,6 +1,6 @@
 package com.mumu.novel.dto.resp;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -120,6 +120,6 @@ public class BookInfoRespDto {
      */
     @Schema(description = "最新章节更新时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
 }

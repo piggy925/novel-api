@@ -2,6 +2,7 @@ package com.mumu.novel.service;
 
 import com.mumu.novel.core.common.resp.RestResp;
 import com.mumu.novel.dto.req.UserCommentReqDto;
+import com.mumu.novel.dto.resp.BookChapterAboutRespDto;
 import com.mumu.novel.dto.resp.BookCommentRespDto;
 import com.mumu.novel.dto.resp.BookInfoRespDto;
 
@@ -37,4 +38,10 @@ public interface BookService {
      * 添加小说评论
      */
     RestResp<Void> deleteComment(Long id);
+
+    /**
+     * 查询小说章节信息
+     */
+    RestResp<BookChapterAboutRespDto> getLastChapterAbout(Long id);
+
 }
